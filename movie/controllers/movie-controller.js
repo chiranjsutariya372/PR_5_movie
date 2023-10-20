@@ -2,45 +2,45 @@ const Movie = require("../Models/movie.schema")
 
 
 const addMovie=async(req,res)=>{
-    const added= await Movie.create(req.body)
+    let added= await Movie.create(req.body)
     res.status(201).send(added)
 }
 
 const updateMovie=async(req,res)=>{
-    const updated= await Movie.findByIdAndUpdate(req.params.id,req.body)
-    res.status(200).send(updated)
+    let update= await Movie.findByIdAndUpdate(req.params.id,req.body)
+    update = await  Movie.findById(req.params.id)
+    res.status(200).send(update)
 }
 
 const deleteMovie=async(req,res)=>{
-    const remove= await Movie.findByIdAndDelete(req.params.id)
-    res.status(200).send(remove)
+    let remove= await Movie.findByIdAndDelete(req.params.id)
+    res.status(200).send({message:"Movie deleted"})
 }
 
 const ratingMovie=async(req,res)=>{
-    const movie=await Movie.findById(req.params.id)
+    let movie=await Movie.findById(req.params.id)
     if(!movie) return res.send({error: "movie not found"});
-    
-    const ratings=await Movie.findByIdAndUpdate(req.params.id,req.body)
-    res.send({message:"update Rating",ratings})
+    movie.ratings.push({value:req.body.rating})
+    res.send(movie)
 }
 
 const commentMovie=async(req,res)=>{
-    const movie=await Movie.findById(req.params.id)
+    let movie=await Movie.findById(req.params.id)
     if(!movie) return res.send({error: "movie not found"});
     
-    const comments=await Movie.findByIdAndUpdate(req.params.id,req.body)
-    res.send({message:"update Rating",comments})
+    movie.comments.push({text:req.body.text})
+    res.send(movie)
 }
 
 const findeMovie=async(req,res)=>{
-    const {title,addedBy,releaseDate,category}=req.query
+    let {title,addedBy,releaseDate,category}=req.query
 
     if(title||addedBy||releaseDate||category){
         const show=await Movie.find(req.query)
         res.send(...show)
     }
 
-    const movie=await Movie.find()
+    let movie=await Movie.find()
     res.send(movie)
 }
 

@@ -1,10 +1,9 @@
 const express=require("express")
 const {addMovie, updateMovie, deleteMovie, ratingMovie, commentMovie, findeMovie} = require("../controllers/movie-controller")
-const movieDetailes = require("../middlewares/movie-middlewar")
 
 const movie=express()
 
-movie.post("/movie/create",movieDetailes,addMovie)
+movie.post("/movie/create",addMovie)
 movie.patch("/movie/update/:id",updateMovie)
 movie.delete('/movie/delete/:id',deleteMovie)
 movie.patch("/movie/rating/:id",ratingMovie)

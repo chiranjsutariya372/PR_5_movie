@@ -2,7 +2,7 @@ const movieUser = require("../Models/user.schema");
 
 const Register = async (req, res) => {
   const user = await movieUser.create(req.body);
-  res.status(201).send({ message: "sucess", user });
+  res.status(201).send(user);
 };
 
 const Login = async (req, res) => {

@@ -9,9 +9,7 @@ const movieSchema=mongoose.Schema({
     image:String,
     ratings: [
       {
-        type: Number,
-        min: 0,
-        max: 10,
+        value: Number,
       },
     ],
     comments: [
